@@ -16,8 +16,6 @@ SetupIconFile=PixelPulse\Resources\icon.ico
 Compression=lzma2
 SolidCompression=yes
 WizardStyle=modern
-WizardImageFile=PixelPulse\Installer\Assets\wizardimage.bmp
-WizardSmallImageFile=PixelPulse\Installer\Assets\wizardsmall.bmp
 PrivilegesRequired=lowest
 
 [Languages]
