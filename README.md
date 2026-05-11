@@ -20,9 +20,10 @@ A professional desktop application that displays inspirational quotes and verses
 
 ## Installation
 
-1. Download `PixelPulse-Setup.exe`
-2. Run the installer
-3. Launch Pixel Pulse from Start Menu or Desktop
+1. Download `PixelPulseInstaller.exe`
+2. Double-click the installer to run it
+3. Follow the installation wizard
+4. Launch Pixel Pulse from Start Menu or Desktop
 
 ## System Requirements
 
