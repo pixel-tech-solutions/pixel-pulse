@@ -26,10 +26,10 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 [Types]
 Name: "full"; Description: "Full installation"
 Name: "custom"; Description: "Custom installation"
-Name: "compact"; Description: "Compact installation"
+Name: "compact"; Description: "Compact installation (KJV only)"
 
 [Components]
-Name: "kjv"; Description: "King James Version (KJV) - Traditional"; Types: full custom
+Name: "kjv"; Description: "King James Version (KJV) - Traditional"; Types: full custom compact
 Name: "asv"; Description: "American Standard Version (ASV) - Modern formal"; Types: full custom
 Name: "web"; Description: "World English Bible (WEB) - Contemporary"; Types: full custom
 Name: "ylt"; Description: "Young's Literal Translation (YLT) - Word-for-word"; Types: full custom
@@ -90,6 +90,9 @@ begin
   // Skip the "Select Start Menu Folder" page if we're not creating shortcuts
   if PageID = wpSelectProgramGroup then
     Result := not WizardIsTaskSelected('desktopicon') and not WizardIsTaskSelected('quicklaunchicon')
+  // Skip the "Select Components" page for non-custom installations
+  else if PageID = wpSelectComponents then
+    Result := not (WizardIsTypeSelected('custom'))
   else
     Result := False;
 end;
