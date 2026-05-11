@@ -103,7 +103,7 @@ namespace PixelPulse.Database
 
             // Motivation scoring
             scores[QuoteCategory.Motivational] = needs.MotivationNeed * 0.7;
-            scores[QuoteCategory.Inspirational] = needs.MotivationNeed * 0.6;
+            scores[QuoteCategory.Encouragement] = needs.MotivationNeed * 0.6;
             scores[QuoteCategory.Encouragement] = needs.MotivationNeed * 0.5;
 
             // Age-based adjustments
@@ -193,7 +193,7 @@ namespace PixelPulse.Database
                     break;
                 case "inspiration":
                     adjustedScores[QuoteCategory.Motivational] = adjustedScores.GetValueOrDefault(QuoteCategory.Motivational, 0) * 1.5;
-                    adjustedScores[QuoteCategory.Inspirational] = adjustedScores.GetValueOrDefault(QuoteCategory.Inspirational, 0) * 1.4;
+                    adjustedScores[QuoteCategory.Encouragement] = adjustedScores.GetValueOrDefault(QuoteCategory.Encouragement, 0) * 1.4;
                     break;
             }
 

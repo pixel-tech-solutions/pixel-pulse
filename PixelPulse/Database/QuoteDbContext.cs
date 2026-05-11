@@ -10,6 +10,14 @@ public class QuoteDbContext : DbContext
     public DbSet<Quote> Quotes { get; set; }
     public DbSet<QuoteMatch> QuoteMatches { get; set; }
 
+    public QuoteDbContext()
+    {
+    }
+
+    public QuoteDbContext(DbContextOptions<QuoteDbContext> options) : base(options)
+    {
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);

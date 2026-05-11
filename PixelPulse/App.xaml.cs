@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using PixelPulse.Models;
+using PixelPulse.Database;
 using Application = System.Windows.Application;
 
 namespace PixelPulse

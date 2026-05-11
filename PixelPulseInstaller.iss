@@ -18,7 +18,6 @@ SolidCompression=yes
 WizardStyle=modern
 PrivilegesRequired=lowest
 ; Updated for larger application size with new features
-AppSize=50000
 UsedUserAreasWarning=no
 
 [Languages]
@@ -43,8 +42,8 @@ Name: "quicklaunchicon"; Description: "Create a &Quick Launch shortcut"; GroupDe
 Name: "autostart"; Description: "&Start with Windows"; GroupDescription: "Startup options:"
 
 [Files]
-; Main application executable and all dependencies for .NET 8.0
-Source: "PixelPulse\bin\Release\net8.0-windows\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+; Self-contained application executable (includes .NET 8.0 runtime)
+Source: "publish\PixelPulse.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "PixelPulse\Resources\icon.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion

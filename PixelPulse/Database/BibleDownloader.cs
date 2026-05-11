@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
@@ -150,7 +151,7 @@ public class BibleDownloader
                     try
                     {
                         // Download each book
-                        var bookUrl = $"https://raw.githubusercontent.com/aruljohn/Bible-kjv/master/{book.Replace(' ', '%20')}.json";
+                        var bookUrl = $"https://raw.githubusercontent.com/aruljohn/Bible-kjv/master/{book.Replace(" ", "%20")}.json";
                         var bookResponse = await _httpClient.GetStringAsync(bookUrl);
                         var bibleBook = JsonSerializer.Deserialize<BibleBook>(bookResponse);
 
@@ -511,7 +512,7 @@ public class BibleDownloader
         {
             var bookChapter = refParts[0].Trim();
             var verseNum = refParts[1].Trim();
-            var textWords = text.Split(' ').Take(3).Join(" ");
+            var textWords = string.Join(" ", text.Split(' ').Take(3));
             return $"{bookChapter}:{verseNum}:{textWords}".ToLower().Replace(" ", "");
         }
         return reference.ToLower();
