@@ -84,15 +84,9 @@
                               FontWeight="SemiBold"
                               Foreground="{StaticResource AccentGoldBrush}"
                               Margin="0,0,0,5"/>
-                    <TextBlock Text="contact@pixeltechsolutions.com" 
+                    <TextBlock Text="support@pixelpulse.com" 
                               Foreground="{StaticResource SecondaryBlueBrush}"
-                              Cursor="Hand"
-                              MouseLeftButtonDown="Email_MouseLeftButtonDown"/>
-                    <TextBlock Text="www.pixeltechsolutions.com" 
-                              Foreground="{StaticResource SecondaryBlueBrush}"
-                              Cursor="Hand"
-                              Margin="0,5,0,0"
-                              MouseLeftButtonDown="Website_MouseLeftButtonDown"/>
+                              Cursor="Arrow"/>
                 </StackPanel>
                 
                 <Separator Background="#3B82F6" Opacity="0.5"/>

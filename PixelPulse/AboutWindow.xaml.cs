@@ -19,33 +19,11 @@ public partial class AboutWindow : Window
 
     private void Email_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        try
-        {
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = $"mailto:{CompanyInfo.Email}",
-                UseShellExecute = true
-            });
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Unable to open email client: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
+        // Email functionality disabled for offline operation
     }
 
     private void Website_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        try
-        {
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = $"https://{CompanyInfo.Website}",
-                UseShellExecute = true
-            });
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Unable to open website: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
+        // Website functionality disabled for offline operation
     }
 }

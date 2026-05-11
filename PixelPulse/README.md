@@ -12,7 +12,7 @@ A professional desktop application that displays inspirational quotes and Bible 
 - **Customizable Settings** - Font size, colors, display modes
 - **Matched Quote Pairs** - Display complementary quotes together
 - **Click-Through Window** - Quotes appear behind other applications
-- **Self-Contained Database** - No internet required after installation
+- **Fully Offline** - No internet required after installation
 
 ## Installation
 
@@ -51,15 +51,15 @@ A professional desktop application that displays inspirational quotes and Bible 
 
 ## Privacy
 
-Pixel Pulse is completely self-contained:
+Pixel Pulse operates completely offline:
 - No internet connection required after installation
 - No data collection or telemetry
-- All quotes are stored locally
+- All content is stored locally
 - No external dependencies
 
 ## Support
 
-For support and updates, visit our website or contact support@pixelpulse.com
+For support and updates, contact support@pixelpulse.com
 
 ---
 
