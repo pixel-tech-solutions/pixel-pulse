@@ -61,10 +61,6 @@ Pixel Pulse operates completely offline:
 - All content is stored locally
 - No external dependencies
 
-## Support
-
-For support and updates, contact support@pixelpulse.com
-
 ---
 
 © 2026 Pixel Tech Solutions. All rights reserved.
