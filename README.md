@@ -117,16 +117,13 @@ See [BRAND_GUIDELINES.md](BRAND_GUIDELINES.md) for Pixel Tech Solutions branding
 
 ## Contact & Support
 
-**Pixel Tech Solutions**  
-**Email:** contact@pixeltechsolutions.com  
-**Website:** www.pixeltechsolutions.com  
-**CEO:** Stephen Ssegonga
+**Pixel Tech Solutions**
 
-For support, feature requests, or inquiries, please contact us at the email above.
+For support, feature requests, or inquiries, please contact us through our GitHub repository or check our website for updates.
 
 ## License
 
-Copyright © 2026 Pixel Tech Solutions. All rights reserved.
+Copyright 2026 Pixel Tech Solutions. All rights reserved.
 
 This software is proprietary and protected by copyright laws. See LICENSE.txt for full license terms.
 
