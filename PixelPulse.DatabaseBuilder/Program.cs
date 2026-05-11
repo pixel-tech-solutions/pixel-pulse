@@ -69,23 +69,13 @@ namespace PixelPulse.DatabaseBuilder
                 var mainDbPath = Path.Combine(outputDir, "quotes.db");
                 await CreateMainQuotesDatabaseAsync(mainDbPath, downloadedQuotes);
 
-                // Add quotes to database in batches for better performance
-                Console.WriteLine("Adding quotes to database (this may take a while for large datasets)...");
-                await AddQuotesInBatchesAsync(context, downloadedQuotes);
-
                 stopwatch.Stop();
                 
                 Console.WriteLine($"\n=== Database Creation Completed ===");
-                Console.WriteLine($"Total quotes: {await context.Quotes.CountAsync():N0}");
-                Console.WriteLine($"Database file: {dbPath}");
-                Console.WriteLine($"File size: {new FileInfo(dbPath).Length:N0} bytes ({new FileInfo(dbPath).Length / 1024.0 / 1024.0:F1} MB)");
+                Console.WriteLine($"Total quotes: {downloadedQuotes.Count:N0}");
+                Console.WriteLine($"Main database file: {mainDbPath}");
+                Console.WriteLine($"File size: {new FileInfo(mainDbPath).Length:N0} bytes ({new FileInfo(mainDbPath).Length / 1024.0 / 1024.0:F1} MB)");
                 Console.WriteLine($"Build time: {stopwatch.Elapsed.TotalMinutes:F1} minutes");
-
-                // Verify database integrity
-                await VerifyDatabaseAsync(context);
-
-                // Test performance
-                await TestDatabasePerformanceAsync(context);
 
                 Console.WriteLine($"\n✅ Multi-version Bible quote database built successfully!");
                 Console.WriteLine("The database now includes:");
@@ -121,8 +111,8 @@ namespace PixelPulse.DatabaseBuilder
                 try
                 {
                     await context.SaveChangesAsync();
-                    var progress = (i + batch) * 100.0 / quotes.Count;
-                    Console.Write($"\rProgress: {progress:F1}% ({i + batch:N0}/{quotes.Count:N0} quotes)");
+                    var progress = (i + batch.Count) * 100.0 / quotes.Count;
+                    Console.Write($"\rProgress: {progress:F1}% ({i + batch.Count:N0}/{quotes.Count:N0} quotes)");
                 }
                 catch (Exception ex)
                 {
@@ -205,7 +195,6 @@ namespace PixelPulse.DatabaseBuilder
             stopwatch.Stop();
             Console.WriteLine($"Search for 'love' or 'hope': {searchResults.Count:N0} results in {stopwatch.ElapsedMilliseconds:F0}ms");
         }
-    }
 
         private static async Task CreateModularBibleDatabasesAsync(string outputDir, List<Quote> allQuotes)
         {
@@ -231,7 +220,9 @@ namespace PixelPulse.DatabaseBuilder
                 await AddQuotesInBatchesAsync(context, versionGroup.ToList());
                 
                 var fileInfo = new FileInfo(dbPath);
-                Console.WriteLine($"  {versionGroup.Key}: {versionGroup.Count:N0} verses ({fileInfo.Length / 1024.0 / 1024.0:F1} MB)");
+                var fileSizeMB = fileInfo.Length / 1024.0 / 1024.0;
+                var versionCount = versionGroup.Count();
+                Console.WriteLine("  " + versionGroup.Key + ": " + versionCount.ToString("N0") + " verses (" + fileSizeMB.ToString("F1") + " MB)");
             }
         }
 
@@ -251,7 +242,9 @@ namespace PixelPulse.DatabaseBuilder
             await AddQuotesInBatchesAsync(context, nonBibleQuotes);
             
             var fileInfo = new FileInfo(dbPath);
-            Console.WriteLine($"  Main Database: {nonBibleQuotes.Count:N0} quotes ({fileInfo.Length / 1024.0 / 1024.0:F1} MB)");
+            var fileSizeMB = fileInfo.Length / 1024.0 / 1024.0;
+            var quotesCount = nonBibleQuotes.Count;
+            Console.WriteLine("  Main Database: " + quotesCount.ToString("N0") + " quotes (" + fileSizeMB.ToString("F1") + " MB)");
         }
     }
 }
