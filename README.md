@@ -4,13 +4,13 @@
 
 A beautiful Windows desktop application that displays floating quotes in the top-right corner with transparency, click-through mode, fade animations, and comprehensive quote database integration.
 
-**Developed by Pixel Pulse**
+**Developed by Pixel Tech Solutions**
 
 ---
 
 ## About Pixel Pulse
 
-Pixel Pulse is a software development company focused on creating innovative, user-friendly applications that enhance productivity and inspiration. Pixel Pulse represents our commitment to delivering high-quality software with professional design and exceptional user experience.
+Pixel Tech Solutions is a software development company focused on creating innovative, user-friendly applications that enhance productivity and inspiration. Pixel Pulse represents our commitment to delivering high-quality software with professional design and exceptional user experience.
 
 ## Features
 
@@ -21,7 +21,7 @@ Pixel Pulse is a software development company focused on creating innovative, us
 - **Click-Through Mode**: Mouse passes through the window (configurable)
 - **System Tray Integration**: Minimize to tray, right-click menu
 - **Auto-Start**: Option to start with Windows
-- **Offline Database**: SQLite database with 100,000+ quotes
+- **Fully Offline**: SQLite database with inspirational quotes
 
 ## Requirements
 
@@ -88,12 +88,9 @@ Configuration for scripts is in `scripts\config.json` (paths, dimensions, defaul
 - Configure all settings through the Settings window
 - The quote refreshes automatically based on your refresh interval setting
 
-## Data Sources
+## Content
 
-- Quote Garden API (75,000+ quotes)
-- BibleInJson (31,000+ Bible verses)
-- Quotable API
-- Various GitHub repositories
+Pixel Pulse includes a comprehensive collection of inspirational quotes and verses across multiple categories, all stored locally for offline use.
 
 ## Project Structure
 
@@ -116,14 +113,13 @@ See [BRAND_GUIDELINES.md](BRAND_GUIDELINES.md) for Pixel Pulse branding guidelin
 
 ## Contact & Support
 
-**Pixel Pulse**
+**Pixel Tech Solutions**
 
-For support, feature requests, or inquiries, please contact us through our GitHub repository.
+For support, feature requests, or inquiries, please contact us at support@pixelpulse.com.
 
 ## License
 
-Copyright 2026 Pixel Pulse. All rights reserved.
+Copyright 2026 Pixel Tech Solutions. All rights reserved.
 
 This software is proprietary and protected by copyright laws. See LICENSE.txt for full license terms.
 
-**Note:** This project uses data from various open-source quote databases. Please respect their individual licenses.
