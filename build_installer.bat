@@ -14,7 +14,7 @@ if not exist "C:\Program Files (x86)\Inno Setup 6\iscc.exe" (
 REM Build the application first
 echo Building self-contained application...
 cd PixelPulse
-dotnet publish -c Release -r win-x64 --self-contained true -o ../publish
+dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishTrimmed=false -p:IncludeNativeLibrariesForSelfExtract=true -o ../publish
 if %ERRORLEVEL% NEQ 0 (
     echo ERROR: Application build failed!
     pause
