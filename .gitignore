@@ -85,3 +85,18 @@ $RECYCLE.BIN/
 
 # PowerShell Gallery modules
 PSGetModule.xml
+
+# Security - exclude sensitive files
+*.key
+*.pfx
+*.p12
+*.pem
+*.crt
+*.cer
+secrets.txt
+config.json
+appsettings.json
+connectionStrings.config
+
+# Exclude PixelPulseInstaller.exe from git (keep only in releases)
+PixelPulseInstaller.exe
