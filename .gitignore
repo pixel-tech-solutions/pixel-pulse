@@ -98,5 +98,19 @@ config.json
 appsettings.json
 connectionStrings.config
 
-# Exclude PixelPulseInstaller.exe from git (keep only in releases)
-PixelPulseInstaller.exe
+# Exclude installer executables from git (keep only in releases)
+*.exe
+*.msi
+
+# Exclude installer build outputs
+InstallerOutput/
+Output/
+
+# Exclude external database files (keep only embedded)
+Resources/*.db
+Resources/*.sqlite
+
+# Exclude temporary setup files
+setup_embedded_database*.ps1
+create_database*.bat
+generate_embedded_database*.ps1

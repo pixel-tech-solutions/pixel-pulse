@@ -25,4 +25,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\quotes.db" Condition="Exists('Resources\quotes.db')">
+      <LogicalName>PixelPulse.Resources.quotes.db</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

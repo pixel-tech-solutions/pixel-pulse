@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using PixelPulse.Models;
@@ -26,15 +27,18 @@ namespace PixelPulse
             var splash = new SplashScreen();
             splash.Show();
             
-            // Use dispatcher timer to close splash after delay
+            // Use dispatcher timer to close splash after delay and check database
             var timer = new System.Windows.Threading.DispatcherTimer
             {
                 Interval = TimeSpan.FromSeconds(2)
             };
-            timer.Tick += (s, args) =>
+            timer.Tick += async (s, args) =>
             {
                 timer.Stop();
                 splash.Close();
+                
+                // Check if database is populated
+                await CheckAndPrepareDatabaseAsync();
             
                 // Create and show main window
                 var mainWindow = new MainWindow();
@@ -69,7 +73,7 @@ namespace PixelPulse
                     settingsWindow.ShowDialog();
                 }
             });
-            contextMenu.Items.Add("Refresh Quote", null, (s, args) =>
+                        contextMenu.Items.Add("Refresh Quote", null, (s, args) =>
             {
                 if (MainWindow is MainWindow mw)
                 {
@@ -107,6 +111,35 @@ namespace PixelPulse
             {
                 System.Windows.MessageBox.Show("Pixel Pulse is already running.", "Pixel Pulse", MessageBoxButton.OK, MessageBoxImage.Information);
                 Shutdown();
+            }
+        }
+
+        private async Task CheckAndPrepareDatabaseAsync()
+        {
+            try
+            {
+                // Initialize self-contained database
+                await QuoteDatabase.InitializeAsync();
+                
+                // Check if database has sufficient quotes
+                var quoteCount = QuoteDatabase.GetQuoteCount();
+                if (quoteCount >= 50)
+                {
+                    System.Diagnostics.Debug.WriteLine("Database initialized successfully with quotes");
+                    return;
+                }
+                
+                // Database is empty - this shouldn't happen in production
+                System.Diagnostics.Debug.WriteLine("Warning: Database has insufficient quotes");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error initializing database: {ex.Message}");
+                System.Windows.MessageBox.Show(
+                    "Pixel Pulse encountered an error during initialization.\n\nPlease restart the application.",
+                    "Initialization Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
         }
 

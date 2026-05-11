@@ -31,10 +31,8 @@ public partial class MainWindow : Window
         _settingsManager = new SettingsManager();
         _settings = _settingsManager.LoadSettings();
         
-        // Ensure database exists
-        var context = new QuoteDbContext();
-        context.Database.EnsureCreated();
-        _quoteService = new QuoteService(context);
+        // Initialize self-contained database
+        _quoteService = new QuoteService();
         
         _settingsManager.SettingsChanged += (s, newSettings) =>
         {
@@ -356,6 +354,12 @@ public partial class MainWindow : Window
         settingsWindow.ShowDialog();
         _settings = _settingsManager.LoadSettings();
         ApplySettings();
+    }
+
+    private void DownloadQuotesMenuItem_Click(object sender, RoutedEventArgs e)
+    {
+        var downloadWindow = new OfflineDownloadWindow();
+        downloadWindow.ShowDialog();
     }
 
     private void RefreshMenuItem_Click(object sender, RoutedEventArgs e)

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using PixelPulse.Database;
 using PixelPulse.Models;
 
@@ -9,12 +9,11 @@ namespace PixelPulse;
 
 public class QuoteService
 {
-    private readonly QuoteDbContext _context;
     private readonly Random _random = new Random();
 
-    public QuoteService(QuoteDbContext context)
+    public QuoteService()
     {
-        _context = context;
+        // Self-contained database - no external context needed
     }
 
     public Quote? GetRandomQuote(List<QuoteCategory>? categories = null)

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  
+  <Product Id="*" 
+           Name="Pixel Pulse" 
+           Language="1033" 
+           Version="1.0.0.0" 
+           Manufacturer="Pixel Tech Solutions" 
+           UpgradeCode="12345678-1234-1234-1234-123456789012">
+    
+    <Package InstallerVersion="200" 
+             Compressed="yes" 
+             InstallScope="perMachine"
+             Description="Pixel Pulse - Inspiration at Your Fingertips"
+             Comments="Professional quote display application with automatic setup" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of Pixel Pulse is already installed." />
+    
+    <MediaTemplate EmbedCab="yes" />
+
+    <!-- Features -->
+    <Feature Id="ProductFeature" Title="Pixel Pulse" Level="1">
+      <ComponentRef Id="MainExecutable" />
+      <ComponentRef Id="DatabaseFiles" />
+      <ComponentRef Id="RuntimeFiles" />
+    </Feature>
+
+    <!-- Directory Structure -->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Pixel Pulse">
+          
+          <!-- Main Application Files -->
+          <Component Id="MainExecutable" Guid="*">
+            <File Id="PixelPulseExe" 
+                  Source="$(var.PixelPulse.TargetDir)\PixelPulse.exe" 
+                  KeyPath="yes" />
+            
+            <File Id="ConfigExe" 
+                  Source="$(var.PixelPulse.TargetDir)\*.dll" />
+            
+            <File Id="IconFile" 
+                  Source="$(var.PixelPulse.TargetDir)\Resources\icon.ico" />
+            
+            <!-- Start Menu Shortcut -->
+            <Shortcut Id="ApplicationStartMenuShortcut"
+                      Name="Pixel Pulse"
+                      Description="Inspiration at Your Fingertips"
+                      Target="[#PixelPulseExe]"
+                      WorkingDirectory="INSTALLFOLDER"
+                      Icon="icon.ico"
+                      IconIndex="0" />
+            
+            <!-- Desktop Shortcut -->
+            <Shortcut Id="ApplicationDesktopShortcut"
+                      Name="Pixel Pulse"
+                      Description="Inspiration at Your Fingertips"
+                      Target="[#PixelPulseExe]"
+                      WorkingDirectory="INSTALLFOLDER"
+                      Directory="DesktopFolder"
+                      Icon="icon.ico"
+                      IconIndex="0" />
+            
+            <!-- Registry Entries -->
+            <RegistryKey Root="HKCU" Key="Software\Pixel Tech Solutions\Pixel Pulse">
+              <RegistryValue Name="InstallPath" Type="string" Value="[INSTALLFOLDER]" />
+              <RegistryValue Name="Version" Type="string" Value="1.0.0.0" />
+              <RegistryValue Name="InstallDate" Type="string" Value="[Date]" />
+            </RegistryKey>
+          </Component>
+
+          <!-- Database and Runtime Files -->
+          <Component Id="DatabaseFiles" Guid="*">
+            <File Id="EmbeddedDatabase" 
+                  Source="$(var.PixelPulse.TargetDir)\Resources\quotes.db" 
+                  CheckSum="yes" />
+            
+            <File Id="DatabasePlaceholder" 
+                  Source="$(var.PixelPulse.TargetDir)\Resources\README.md" />
+          </Component>
+
+          <!-- .NET Runtime Installation -->
+          <Component Id="RuntimeFiles" Guid="*">
+            <Condition><![CDATA[NOT NETRUNTIMEINSTALLED]]></Condition>
+            
+            <!-- Download .NET Runtime if needed -->
+            <CustomAction Id="DownloadNetRuntime"
+                      BinaryKey="WixCA"
+                      DllEntry="DownloadAndInstallNetRuntime"
+                      Execute="immediate"
+                      Return="check"
+                      HideTarget="no" />
+            
+            <!-- Progress Text for Runtime Download -->
+            <ProgressText Action="DownloadNetRuntime" Message="Downloading .NET 8 Runtime..." />
+            <ProgressText Action="InstallNetRuntime" Message="Installing .NET 8 Runtime..." />
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <!-- Properties -->
+    <Property Id="NETRUNTIMEINSTALLED">
+      <RegistrySearch Id="NetRuntimeSearch" 
+                   Root="HKLM" 
+                   Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full" 
+                   Name="Version" 
+                   Type="raw" />
+    </Property>
+
+    <!-- Custom Actions -->
+    <Binary Id="WixCA" SourceFile="WixCustomActions.CA.dll" />
+    
+    <!-- UI Customization -->
+    <UIRef Id="WixUI_InstallDir" />
+    <UIRef Id="WixUI_ProgressBar" />
+    
+    <!-- License Agreement -->
+    <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+    
+    <!-- Banner and Dialog Images -->
+    <WixVariable Id="WixUIBannerBmp" Value="banner.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="dialog.bmp" />
+
+  </Product>
+</Wix>
