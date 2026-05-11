@@ -17,6 +17,9 @@ Compression=lzma2
 SolidCompression=yes
 WizardStyle=modern
 PrivilegesRequired=lowest
+; Updated for larger application size with new features
+AppSize=50000
+UsedUserAreasWarning=no
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -40,25 +43,23 @@ Name: "quicklaunchicon"; Description: "Create a &Quick Launch shortcut"; GroupDe
 Name: "autostart"; Description: "&Start with Windows"; GroupDescription: "Startup options:"
 
 [Files]
-; Main self-contained executable (includes .NET 8.0 runtime)
-Source: "PixelPulse\bin\Release\net8.0-windows\PixelPulse.exe"; DestDir: "{app}"; Flags: ignoreversion
+; Main application executable and all dependencies for .NET 8.0
+Source: "PixelPulse\bin\Release\net8.0-windows\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "PixelPulse\Resources\icon.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion
 
-; Include the comprehensive quotes database (with complete KJV Bible)
-Source: "PixelPulse\Resources\quotes.db"; DestDir: "{app}"; Flags: ignoreversion
+; Database files will be created on first run or downloaded as needed
+; Include quotes database if it exists
+Source: "PixelPulse\Resources\quotes.db"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 
-; Include modular Bible version databases for selective installation
-Source: "PixelPulse\Resources\bible_kjv.db"; DestDir: "{app}"; Flags: ignoreversion; Components: kjv
-Source: "PixelPulse\Resources\bible_asv.db"; DestDir: "{app}"; Flags: ignoreversion; Components: asv
-Source: "PixelPulse\Resources\bible_web.db"; DestDir: "{app}"; Flags: ignoreversion; Components: web
-Source: "PixelPulse\Resources\bible_ylt.db"; DestDir: "{app}"; Flags: ignoreversion; Components: ylt
-Source: "PixelPulse\Resources\bible_bbe.db"; DestDir: "{app}"; Flags: ignoreversion; Components: bbe
-Source: "PixelPulse\Resources\bible_darby.db"; DestDir: "{app}"; Flags: ignoreversion; Components: darby
-
-; Copy database if it exists in development location (fallback)
-Source: "%APPDATA%\PixelPulse\quotes.db"; DestDir: "{app}"; Flags: external skipifsourcedoesntexist ignoreversion
+; Include Bible version databases if they exist (for selective installation)
+Source: "PixelPulse\Resources\bible_kjv.db"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist; Components: kjv
+Source: "PixelPulse\Resources\bible_asv.db"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist; Components: asv
+Source: "PixelPulse\Resources\bible_web.db"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist; Components: web
+Source: "PixelPulse\Resources\bible_ylt.db"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist; Components: ylt
+Source: "PixelPulse\Resources\bible_bbe.db"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist; Components: bbe
+Source: "PixelPulse\Resources\bible_darby.db"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist; Components: darby
 
 [Icons]
 Name: "{group}\Pixel Pulse"; Filename: "{app}\PixelPulse.exe"; WorkingDir: "{app}"; IconFilename: "{app}\icon.ico"; Comment: "Pixel Pulse - Inspiration at Your Fingertips"

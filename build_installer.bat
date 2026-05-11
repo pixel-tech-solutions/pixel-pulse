@@ -14,13 +14,16 @@ if not exist "C:\Program Files (x86)\Inno Setup 6\iscc.exe" (
 REM Build the application first
 echo Building application...
 cd PixelPulse
-dotnet build -c Release
+dotnet build -c Release --self-contained true -r win-x64
 if %ERRORLEVEL% NEQ 0 (
     echo ERROR: Application build failed!
     pause
     exit /b 1
 )
 cd ..
+
+REM Create output directory if it doesn't exist
+if not exist "InstallerOutput" mkdir InstallerOutput
 
 REM Build the installer
 echo Building installer...
