@@ -25,26 +25,26 @@ $headers = @{
     "Content-Type" = "application/json"
 }
 
-Write-Host "🔧 GitHub Release Asset Updater" -ForegroundColor Green
+Write-Host "[TOOL] GitHub Release Asset Updater" -ForegroundColor Green
 Write-Host "=================================" -ForegroundColor Green
 Write-Host "Repository: $RepoOwner/$RepoName" -ForegroundColor Cyan
 Write-Host "Release: $Tag" -ForegroundColor Cyan
 Write-Host ""
 
 # Get release ID
-Write-Host "📋 Getting release information..." -ForegroundColor Yellow
+Write-Host "[INFO] Getting release information..." -ForegroundColor Yellow
 $releaseUrl = "https://api.github.com/repos/$RepoOwner/$RepoName/releases/tags/$Tag"
 $release = Invoke-RestMethod -Uri $releaseUrl -Method Get -Headers $headers
 $releaseId = $release.id
 
-Write-Host "✅ Release ID: $releaseId" -ForegroundColor Green
+Write-Host "[OK] Release ID: $releaseId" -ForegroundColor Green
 
 # Get current assets
-Write-Host "📋 Getting current assets..." -ForegroundColor Yellow
+Write-Host "[INFO] Getting current assets..." -ForegroundColor Yellow
 $assetsUrl = "https://api.github.com/repos/$RepoOwner/$RepoName/releases/$releaseId/assets"
 $assets = Invoke-RestMethod -Uri $assetsUrl -Method Get -Headers $headers
 
-Write-Host "📦 Current assets:" -ForegroundColor Cyan
+Write-Host "[INFO] Current assets:" -ForegroundColor Cyan
 foreach ($asset in $assets) {
     $sizeMB = [math]::Round($asset.size / 1MB, 2)
     Write-Host "  - $($asset.name) ($sizeMB MB)" -ForegroundColor White
@@ -52,21 +52,21 @@ foreach ($asset in $assets) {
 
 # Delete old assets
 Write-Host ""
-Write-Host "🗑️ Deleting old assets..." -ForegroundColor Red
+Write-Host "[DELETE] Deleting old assets..." -ForegroundColor Red
 foreach ($asset in $assets) {
     Write-Host "  Deleting: $($asset.name)" -ForegroundColor Yellow
     $deleteUrl = "https://api.github.com/repos/$RepoOwner/$RepoName/releases/assets/$($asset.id)"
     try {
         Invoke-RestMethod -Uri $deleteUrl -Method Delete -Headers $headers | Out-Null
-        Write-Host "    ✅ Deleted" -ForegroundColor Green
+        Write-Host "    [OK] Deleted" -ForegroundColor Green
     } catch {
-        Write-Host "    ❌ Failed: $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host "    [ERROR] Failed: $($_.Exception.Message)" -ForegroundColor Red
     }
 }
 
 # Upload new assets
 Write-Host ""
-Write-Host "📤 Uploading new assets..." -ForegroundColor Green
+Write-Host "[UPLOAD] Uploading new assets..." -ForegroundColor Green
 
 # Upload installer
 $installerPath = "InstallerOutput\PixelPulseInstaller.exe"
@@ -84,9 +84,9 @@ if (Test-Path $installerPath) {
     try {
         Invoke-RestMethod -Uri $uploadUrl -Method Post -Headers $uploadHeaders -Body $installerBytes | Out-Null
         $sizeMB = [math]::Round($installerSize / 1MB, 2)
-        Write-Host "    ✅ Uploaded ($sizeMB MB)" -ForegroundColor Green
+        Write-Host "    [OK] Uploaded ($sizeMB MB)" -ForegroundColor Green
     } catch {
-        Write-Host "    ❌ Failed: $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host "    [ERROR] Failed: $($_.Exception.Message)" -ForegroundColor Red
     }
 }
 
@@ -106,9 +106,9 @@ if (Test-Path $licensePath) {
     try {
         Invoke-RestMethod -Uri $uploadUrl -Method Post -Headers $uploadHeaders -Body $licenseBytes | Out-Null
         $sizeKB = [math]::Round($licenseSize / 1KB, 2)
-        Write-Host "    ✅ Uploaded ($sizeKB KB)" -ForegroundColor Green
+        Write-Host "    [OK] Uploaded ($sizeKB KB)" -ForegroundColor Green
     } catch {
-        Write-Host "    ❌ Failed: $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host "    [ERROR] Failed: $($_.Exception.Message)" -ForegroundColor Red
     }
 }
 
@@ -128,12 +128,12 @@ if (Test-Path $readmePath) {
     try {
         Invoke-RestMethod -Uri $uploadUrl -Method Post -Headers $uploadHeaders -Body $readmeBytes | Out-Null
         $sizeKB = [math]::Round($readmeSize / 1KB, 2)
-        Write-Host "    ✅ Uploaded ($sizeKB KB)" -ForegroundColor Green
+        Write-Host "    [OK] Uploaded ($sizeKB KB)" -ForegroundColor Green
     } catch {
-        Write-Host "    ❌ Failed: $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host "    [ERROR] Failed: $($_.Exception.Message)" -ForegroundColor Red
     }
 }
 
 Write-Host ""
-Write-Host "🎉 Release asset update completed!" -ForegroundColor Green
+Write-Host "[SUCCESS] Release asset update completed!" -ForegroundColor Green
 Write-Host "=================================" -ForegroundColor Green
