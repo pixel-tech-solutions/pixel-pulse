@@ -90,6 +90,9 @@ begin
   // Skip the "Select Start Menu Folder" page if we're not creating shortcuts
   if PageID = wpSelectProgramGroup then
     Result := not WizardIsTaskSelected('desktopicon') and not WizardIsTaskSelected('quicklaunchicon')
+  // Skip the "Select Components" page for non-custom installations
+  else if PageID = wpSelectComponents then
+    Result := False // Always show component selection page for now
   else
     Result := False;
 end;
