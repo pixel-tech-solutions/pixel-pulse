@@ -92,7 +92,7 @@ begin
     Result := not WizardIsTaskSelected('desktopicon') and not WizardIsTaskSelected('quicklaunchicon')
   // Skip the "Select Components" page for non-custom installations
   else if PageID = wpSelectComponents then
-    Result := not (WizardSetupType('custom'))
+    Result := not WizardSetupType('custom')
   else
     Result := False;
 end;
