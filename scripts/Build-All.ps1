@@ -87,17 +87,17 @@ try {
         $results.Restore = $true
     }
 
-    # Build PixelPulse
+    # Build PixelPulse (self-contained)
     $pixelPulseProj = Join-Path $script:RootDir 'PixelPulse\PixelPulse.csproj'
     if (-not (Test-Path $pixelPulseProj)) { throw "Project not found: $pixelPulseProj" }
     if ($PSCmdlet.ShouldProcess('PixelPulse', 'Build')) {
-        Write-Status "Building PixelPulse ($Configuration)..." 'Info'
-        $build = dotnet build $pixelPulseProj --configuration $Configuration --no-restore 2>&1
+        Write-Status "Building PixelPulse (self-contained)..." 'Info'
+        $build = dotnet publish $pixelPulseProj --configuration $Configuration --runtime win-x64 --self-contained true --output "PixelPulse\bin\$Configuration\net8.0-windows" --no-restore 2>&1
         if ($LASTEXITCODE -ne 0) {
             $results.Errors.Add("PixelPulse build failed: $build") | Out-Null
             throw "PixelPulse build failed."
         }
-        Write-Status 'PixelPulse build succeeded.' 'Success'
+        Write-Status 'PixelPulse self-contained build succeeded.' 'Success'
         $results.PixelPulse = $true
     }
 
@@ -113,6 +113,28 @@ try {
         }
         Write-Status 'PixelPulse.DatabaseBuilder build succeeded.' 'Success'
         $results.DatabaseBuilder = $true
+    }
+
+    # Download Quotes and Build Database
+    if ($PSCmdlet.ShouldProcess('Quote Database', 'Download and Build')) {
+        Write-Status "Downloading quotes and building database..." 'Info'
+        $downloadScript = Join-Path $script:RootDir 'scripts\Download-Quotes.ps1'
+        if (-not (Test-Path $downloadScript)) {
+            Write-Status "Download-Quotes.ps1 not found, skipping quote database build" 'Warning'
+        } else {
+            try {
+                & $downloadScript -Force
+                if ($LASTEXITCODE -ne 0) {
+                    Write-Status "Quote database build failed (non-fatal)" 'Warning'
+                    $results.Errors.Add('Quote database build failed') | Out-Null
+                } else {
+                    Write-Status 'Quote database build succeeded.' 'Success'
+                }
+            } catch {
+                Write-Status "Quote database build failed: $_" 'Warning'
+                $results.Errors.Add("Quote database build failed: $_") | Out-Null
+            }
+        }
     }
 
     # Installer (optional)

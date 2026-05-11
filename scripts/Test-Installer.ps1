@@ -72,13 +72,13 @@ try {
     Write-Status "Test install path: $InstallPath" 'Info'
     $productCode = $null
     try {
-        $args = @(
+        $msiArgs = @(
             '/i', $msi.FullName,
             '/qn',
             "INSTALLDIR=`"$InstallPath`"",
             "/l*v", $logInstall
         )
-        $p = Start-Process -FilePath 'msiexec.exe' -ArgumentList $args -Wait -PassThru -NoNewWindow
+        $p = Start-Process -FilePath 'msiexec.exe' -ArgumentList $msiArgs -Wait -PassThru -NoNewWindow
         if ($p.ExitCode -ne 0) {
             Write-Status "Install failed (exit code $($p.ExitCode)). Check $logInstall" 'Error'
             exit 1

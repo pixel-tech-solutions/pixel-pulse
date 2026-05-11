@@ -21,25 +21,49 @@ PrivilegesRequired=lowest
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
+[Types]
+Name: "full"; Description: "Full installation"
+Name: "custom"; Description: "Custom installation"
+Name: "compact"; Description: "Compact installation"
+
+[Components]
+Name: "kjv"; Description: "King James Version (KJV) - Traditional"; Types: full custom
+Name: "asv"; Description: "American Standard Version (ASV) - Modern formal"; Types: full custom
+Name: "web"; Description: "World English Bible (WEB) - Contemporary"; Types: full custom
+Name: "ylt"; Description: "Young's Literal Translation (YLT) - Word-for-word"; Types: full custom
+Name: "bbe"; Description: "Bible in Basic English (BBE) - Simplified"; Types: full custom
+Name: "darby"; Description: "Darby English Bible - Study focused"; Types: full custom
+
 [Tasks]
 Name: "desktopicon"; Description: "Create a &desktop shortcut"; GroupDescription: "Additional icons:"
 Name: "quicklaunchicon"; Description: "Create a &Quick Launch shortcut"; GroupDescription: "Additional icons:"
 Name: "autostart"; Description: "&Start with Windows"; GroupDescription: "Startup options:"
 
 [Files]
-Source: "PixelPulse\bin\Debug\net8.0-windows\PixelPulse.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "PixelPulse\bin\Debug\net8.0-windows\PixelPulse.dll"; DestDir: "{app}"; Flags: ignoreversion
+; Main self-contained executable (includes .NET 8.0 runtime)
+Source: "PixelPulse\bin\Release\net8.0-windows\PixelPulse.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "PixelPulse\Resources\icon.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion
 
-; Copy database if it exists in development location
+; Include the comprehensive quotes database (with complete KJV Bible)
+Source: "PixelPulse\Resources\quotes.db"; DestDir: "{app}"; Flags: ignoreversion
+
+; Include modular Bible version databases for selective installation
+Source: "PixelPulse\Resources\bible_kjv.db"; DestDir: "{app}"; Flags: ignoreversion; Components: kjv
+Source: "PixelPulse\Resources\bible_asv.db"; DestDir: "{app}"; Flags: ignoreversion; Components: asv
+Source: "PixelPulse\Resources\bible_web.db"; DestDir: "{app}"; Flags: ignoreversion; Components: web
+Source: "PixelPulse\Resources\bible_ylt.db"; DestDir: "{app}"; Flags: ignoreversion; Components: ylt
+Source: "PixelPulse\Resources\bible_bbe.db"; DestDir: "{app}"; Flags: ignoreversion; Components: bbe
+Source: "PixelPulse\Resources\bible_darby.db"; DestDir: "{app}"; Flags: ignoreversion; Components: darby
+
+; Copy database if it exists in development location (fallback)
 Source: "%APPDATA%\PixelPulse\quotes.db"; DestDir: "{app}"; Flags: external skipifsourcedoesntexist ignoreversion
 
 [Icons]
 Name: "{group}\Pixel Pulse"; Filename: "{app}\PixelPulse.exe"; WorkingDir: "{app}"; IconFilename: "{app}\icon.ico"; Comment: "Pixel Pulse - Inspiration at Your Fingertips"
 Name: "{group}\Uninstall Pixel Pulse"; Filename: "{uninstallexe}"; Comment: "Uninstall Pixel Pulse"
-Name: "{commondesktop}\Pixel Pulse"; Filename: "{app}\PixelPulse.exe"; WorkingDir: "{app}"; IconFilename: "{app}\icon.ico"; Tasks: desktopicon; Comment: "Pixel Pulse - Inspiration at Your Fingertips"
+Name: "{userdesktop}\Pixel Pulse"; Filename: "{app}\PixelPulse.exe"; WorkingDir: "{app}"; IconFilename: "{app}\icon.ico"; Tasks: desktopicon; Comment: "Pixel Pulse - Inspiration at Your Fingertips"
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Pixel Pulse"; Filename: "{app}\PixelPulse.exe"; WorkingDir: "{app}"; IconFilename: "{app}\icon.ico"; Tasks: quicklaunchicon; Comment: "Pixel Pulse"
 
 [Run]

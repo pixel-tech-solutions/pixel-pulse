@@ -356,12 +356,7 @@ public partial class MainWindow : Window
         ApplySettings();
     }
 
-    private void DownloadQuotesMenuItem_Click(object sender, RoutedEventArgs e)
-    {
-        var downloadWindow = new OfflineDownloadWindow();
-        downloadWindow.ShowDialog();
-    }
-
+    
     private void RefreshMenuItem_Click(object sender, RoutedEventArgs e)
     {
         LoadQuote();

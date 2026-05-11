@@ -13,26 +13,33 @@ public class QuoteService
 
     public QuoteService()
     {
-        // Self-contained database - no external context needed
+        // Initialize the database on service creation
+        _ = QuoteDatabase.InitializeAsync();
     }
 
-    public Quote? GetRandomQuote(List<QuoteCategory>? categories = null)
+    public async Task<Quote?> GetRandomQuoteAsync(List<QuoteCategory>? categories = null)
     {
         try
         {
-            var query = _context.Quotes.AsQueryable();
-
             if (categories != null && categories.Any())
             {
-                query = query.Where(q => categories.Contains(q.Category));
+                // Get quotes from any of the specified categories
+                var allQuotes = new List<Quote>();
+                foreach (var category in categories)
+                {
+                    var categoryQuotes = await QuoteDatabase.GetQuotesAsync(category);
+                    allQuotes.AddRange(categoryQuotes);
+                }
+
+                if (!allQuotes.Any())
+                    return null;
+
+                return allQuotes[_random.Next(allQuotes.Count)];
             }
-
-            var count = query.Count();
-            if (count == 0)
-                return null;
-
-            var skip = _random.Next(count);
-            return query.Skip(skip).FirstOrDefault();
+            else
+            {
+                return await QuoteDatabase.GetRandomQuoteAsync();
+            }
         }
         catch
         {
@@ -40,15 +47,17 @@ public class QuoteService
         }
     }
 
-    public Quote? GetQuoteByCategory(QuoteCategory category)
+    // Keep synchronous version for backward compatibility
+    public Quote? GetRandomQuote(List<QuoteCategory>? categories = null)
+    {
+        return GetRandomQuoteAsync(categories).GetAwaiter().GetResult();
+    }
+
+    public async Task<Quote?> GetQuoteByCategoryAsync(QuoteCategory category)
     {
         try
         {
-            var quotes = _context.Quotes.Where(q => q.Category == category).ToList();
-            if (!quotes.Any())
-                return null;
-
-            return quotes[_random.Next(quotes.Count)];
+            return await QuoteDatabase.GetRandomQuoteAsync(category);
         }
         catch
         {
@@ -56,19 +65,19 @@ public class QuoteService
         }
     }
 
-    public (Quote? Primary, Quote? Secondary)? GetMatchedQuotes(
+    // Keep synchronous version for backward compatibility
+    public Quote? GetQuoteByCategory(QuoteCategory category)
+    {
+        return GetQuoteByCategoryAsync(category).GetAwaiter().GetResult();
+    }
+
+    public async Task<(Quote? Primary, Quote? Secondary)?> GetMatchedQuotesAsync(
         QuoteCategory primaryCategory,
         QuoteCategory secondaryCategory)
     {
         try
         {
-            var primary = GetQuoteByCategory(primaryCategory);
-            var secondary = GetQuoteByCategory(secondaryCategory);
-
-            if (primary == null || secondary == null)
-                return null;
-
-            return (primary, secondary);
+            return await QuoteDatabase.GetMatchedQuotesAsync(primaryCategory, secondaryCategory);
         }
         catch
         {
@@ -76,32 +85,97 @@ public class QuoteService
         }
     }
 
-    public (Quote? Primary, Quote? Secondary)? GetMatchedQuotes(QuoteMatchMode matchMode)
+    // Keep synchronous version for backward compatibility
+    public (Quote? Primary, Quote? Secondary)? GetMatchedQuotes(
+        QuoteCategory primaryCategory,
+        QuoteCategory secondaryCategory)
+    {
+        return GetMatchedQuotesAsync(primaryCategory, secondaryCategory).GetAwaiter().GetResult();
+    }
+
+    public async Task<(Quote? Primary, Quote? Secondary)?> GetMatchedQuotesAsync(QuoteMatchMode matchMode)
     {
         return matchMode switch
         {
-            QuoteMatchMode.MotivationalBible => GetMatchedQuotes(QuoteCategory.Motivational, QuoteCategory.Bible),
-            QuoteMatchMode.LoveMotivational => GetMatchedQuotes(QuoteCategory.Love, QuoteCategory.Motivational),
-            QuoteMatchMode.SuccessLeadership => GetMatchedQuotes(QuoteCategory.Success, QuoteCategory.Leadership),
-            QuoteMatchMode.BusinessSuccess => GetMatchedQuotes(QuoteCategory.Business, QuoteCategory.Success),
-            QuoteMatchMode.WisdomBible => GetMatchedQuotes(QuoteCategory.Wisdom, QuoteCategory.Bible),
-            QuoteMatchMode.EncouragementBible => GetMatchedQuotes(QuoteCategory.Encouragement, QuoteCategory.Bible),
+            QuoteMatchMode.MotivationalBible => await GetMatchedQuotesAsync(QuoteCategory.Motivational, QuoteCategory.Bible),
+            QuoteMatchMode.LoveMotivational => await GetMatchedQuotesAsync(QuoteCategory.Love, QuoteCategory.Motivational),
+            QuoteMatchMode.SuccessLeadership => await GetMatchedQuotesAsync(QuoteCategory.Success, QuoteCategory.Leadership),
+            QuoteMatchMode.BusinessSuccess => await GetMatchedQuotesAsync(QuoteCategory.Business, QuoteCategory.Success),
+            QuoteMatchMode.WisdomBible => await GetMatchedQuotesAsync(QuoteCategory.Wisdom, QuoteCategory.Bible),
+            QuoteMatchMode.EncouragementBible => await GetMatchedQuotesAsync(QuoteCategory.Encouragement, QuoteCategory.Bible),
             QuoteMatchMode.Custom => null, // Will be handled by custom category selection
             _ => null
         };
     }
 
+    // Keep synchronous version for backward compatibility
+    public (Quote? Primary, Quote? Secondary)? GetMatchedQuotes(QuoteMatchMode matchMode)
+    {
+        return GetMatchedQuotesAsync(matchMode).GetAwaiter().GetResult();
+    }
+
     public int GetQuoteCount(QuoteCategory? category = null)
+    {
+        return QuoteDatabase.GetQuoteCount(category);
+    }
+
+    public async Task<List<Quote>> SearchQuotesAsync(string searchTerm)
     {
         try
         {
-            if (category.HasValue)
-                return _context.Quotes.Count(q => q.Category == category.Value);
-            return _context.Quotes.Count();
+            return await QuoteDatabase.SearchQuotesAsync(searchTerm);
         }
         catch
         {
-            return 0;
+            return new List<Quote>();
+        }
+    }
+
+    public async Task<bool> AddQuoteAsync(Quote quote)
+    {
+        try
+        {
+            return await QuoteDatabase.AddQuoteAsync(quote);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public async Task<bool> UpdateQuoteAsync(Quote quote)
+    {
+        try
+        {
+            return await QuoteDatabase.UpdateQuoteAsync(quote);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public async Task<bool> DeleteQuoteAsync(int quoteId)
+    {
+        try
+        {
+            return await QuoteDatabase.DeleteQuoteAsync(quoteId);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public async Task<DatabaseStats> GetDatabaseStatsAsync()
+    {
+        try
+        {
+            return await QuoteDatabase.GetDatabaseStatsAsync();
+        }
+        catch
+        {
+            return new DatabaseStats();
         }
     }
 }

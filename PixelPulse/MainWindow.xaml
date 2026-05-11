@@ -31,7 +31,6 @@
     <Window.ContextMenu>
         <ContextMenu>
             <MenuItem Header="Settings" Click="SettingsMenuItem_Click"/>
-            <MenuItem Header="Download Quotes" Click="DownloadQuotesMenuItem_Click"/>
             <MenuItem Header="Refresh Quote" Click="RefreshMenuItem_Click"/>
             <Separator/>
             <MenuItem Header="About" Click="AboutMenuItem_Click"/>
