@@ -22,7 +22,7 @@ public partial class MainWindow : Window
     private bool _isHovering = false;
     private bool _showPrimaryQuote = true;
     private Quote? _currentQuote;
-    private (Quote Primary, Quote Secondary)? _currentMatchedQuotes;
+    private (Quote? Primary, Quote? Secondary)? _currentMatchedQuotes;
 
     public MainWindow()
     {
@@ -153,7 +153,9 @@ public partial class MainWindow : Window
     {
         if (_currentMatchedQuotes.HasValue)
         {
-            var (primary, secondary) = _currentMatchedQuotes.Value;
+            var matchedQuotes = _currentMatchedQuotes.Value;
+            var primary = matchedQuotes.Primary;
+            var secondary = matchedQuotes.Secondary;
             switch (_settings.DisplayFormat)
             {
                 case QuoteDisplayFormat.Stacked:
@@ -199,7 +201,8 @@ public partial class MainWindow : Window
             if (_currentMatchedQuotes.HasValue)
             {
                 _showPrimaryQuote = !_showPrimaryQuote;
-                var quoteToShow = _showPrimaryQuote ? _currentMatchedQuotes.Value.Primary : _currentMatchedQuotes.Value.Secondary;
+                var matchedQuotes = _currentMatchedQuotes.Value;
+                var quoteToShow = _showPrimaryQuote ? matchedQuotes.Primary : matchedQuotes.Secondary;
                 QuoteTextBlock.Text = $"{quoteToShow.Text}\n\n— {quoteToShow.Author ?? "Unknown"}";
             }
         };
