@@ -13,7 +13,7 @@ param(
     [string]$RepoName = "pixel-pulse",
     
     [Parameter(Mandatory=$false)]
-    [string]$Tag = "v1.0.0"
+    [string]$Tag = "v1.0.0.0"
 )
 
 $ErrorActionPreference = "Stop"
