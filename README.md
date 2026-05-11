@@ -4,14 +4,13 @@
 
 A beautiful Windows desktop application that displays floating quotes in the top-right corner with transparency, click-through mode, fade animations, and comprehensive quote database integration.
 
-**Developed by Pixel Tech Solutions**  
-**CEO:** Stephen Ssegonga
+**Developed by Pixel Pulse**
 
 ---
 
-## About Pixel Tech Solutions
+## About Pixel Pulse
 
-Pixel Tech Solutions is a software development company focused on creating innovative, user-friendly applications that enhance productivity and inspiration. Pixel Pulse represents our commitment to delivering high-quality software with professional design and exceptional user experience.
+Pixel Pulse is a software development company focused on creating innovative, user-friendly applications that enhance productivity and inspiration. Pixel Pulse represents our commitment to delivering high-quality software with professional design and exceptional user experience.
 
 ## Features
 
@@ -113,17 +112,17 @@ See [CHANGELOG.md](CHANGELOG.md) for detailed version history and release notes.
 
 ## Brand Guidelines
 
-See [BRAND_GUIDELINES.md](BRAND_GUIDELINES.md) for Pixel Tech Solutions branding guidelines and color palette.
+See [BRAND_GUIDELINES.md](BRAND_GUIDELINES.md) for Pixel Pulse branding guidelines and color palette.
 
 ## Contact & Support
 
-**Pixel Tech Solutions**
+**Pixel Pulse**
 
-For support, feature requests, or inquiries, please contact us through our GitHub repository or check our website for updates.
+For support, feature requests, or inquiries, please contact us through our GitHub repository.
 
 ## License
 
-Copyright 2026 Pixel Tech Solutions. All rights reserved.
+Copyright 2026 Pixel Pulse. All rights reserved.
 
 This software is proprietary and protected by copyright laws. See LICENSE.txt for full license terms.
 

@@ -48,7 +48,7 @@ namespace PixelPulse
             {
                 Icon = new System.Drawing.Icon("Resources\\icon.ico"),
                 Visible = true,
-                Text = CompanyInfo.ProductName
+                Text = "Pixel Pulse"
             };
 
             _notifyIcon.DoubleClick += (s, args) =>

@@ -1,4 +1,4 @@
-Copyright (c) .NET Foundation and contributors.
+Copyright (c) Pixel Pulse and contributors.
 This software is released under the Microsoft Reciprocal License (MS-RL) (the "License"); you may not use the software except in compliance with the License.
 
 The text of the Microsoft Reciprocal License (MS-RL) can be found online at:
