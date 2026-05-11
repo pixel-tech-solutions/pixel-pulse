@@ -1,0 +1,11 @@
+<Application x:Class="PixelPulse.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Resources>
+        <SolidColorBrush x:Key="PrimaryPurpleBrush" Color="#6B46C1"/>
+        <SolidColorBrush x:Key="SecondaryBlueBrush" Color="#3B82F6"/>
+        <SolidColorBrush x:Key="AccentGoldBrush" Color="#F59E0B"/>
+        <SolidColorBrush x:Key="DarkBackgroundBrush" Color="#1F2937"/>
+        <SolidColorBrush x:Key="LightTextBrush" Color="#F9FAFB"/>
+    </Application.Resources>
+</Application>

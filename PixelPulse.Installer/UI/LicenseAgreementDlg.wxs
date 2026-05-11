@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <UI>
+      <Dialog Id="LicenseAgreementDlg" Width="493" Height="312" Title="License Agreement">
+        <Control Id="LicenseAcceptedCheckBox" Type="CheckBox" X="20" Y="207" Width="370" Height="18" Property="LicenseAccepted" Text="I accept the license agreement" TabSkip="no">
+          <Condition Action="hide"><![CDATA[LicenseAccepted = "1"]]></Condition>
+          <Condition Action="show"><![CDATA[LicenseAccepted <> "1"]]></Condition>
+        </Control>
+        <Control Id="LicenseText" Type="ScrollableText" X="20" Y="60" Width="330" Height="140" Sunken="yes" TabSkip="no">
+          <Text SourceFile="!(wix.WixUILicenseRtf)" />
+        </Control>
+        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="493" Height="58" Text="!(wix.WixUIDialogBmp)" TabSkip="no" />
+        <Control Id="BannerLine" Type="Line" X="0" Y="58" Width="493" Height="0" />
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="493" Height="0" />
+        <Control Id="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Text="License Agreement" />
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="Back">
+          <Publish Event="NewDialog" Value="WelcomeDlg">1</Publish>
+        </Control>
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="Next">
+          <Condition Action="enable"><![CDATA[LicenseAccepted = "1"]]></Condition>
+          <Condition Action="disable"><![CDATA[LicenseAccepted <> "1"]]></Condition>
+          <Publish Event="NewDialog" Value="InstallDirDlg">LicenseAccepted = "1"</Publish>
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="Cancel">
+          <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
+        </Control>
+      </Dialog>
+    </UI>
+  </Fragment>
+</Wix>

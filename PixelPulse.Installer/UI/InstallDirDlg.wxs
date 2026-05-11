@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <UI>
+      <Dialog Id="InstallDirDlg" Width="493" Height="312" Title="!(loc.InstallDirDlg_Title)">
+        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="493" Height="58" Text="!(wix.WixUIDialogBmp)" TabSkip="no" />
+        <Control Id="BannerLine" Type="Line" X="0" Y="58" Width="493" Height="0" />
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="493" Height="0" />
+        <Control Id="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Text="Install Pixel Pulse" />
+        <Control Id="Description" Type="Text" X="135" Y="70" Width="220" Height="40" Text="Choose the installation folder" />
+        <Control Id="FolderLabel" Type="Text" X="20" Y="100" Width="290" Height="15" Text="Install to:" />
+        <Control Id="Folder" Type="PathEdit" X="20" Y="115" Width="320" Height="18" Property="WIXUI_INSTALLDIR" Indirect="yes" />
+        <Control Id="Browse" Type="PushButton" X="350" Y="113" Width="56" Height="17" Text="Browse...">
+          <Publish Event="DoAction" Value="WixUIValidatePath">1</Publish>
+          <Publish Event="SpawnDialog" Value="BrowseDlg">NOT WIXUI_INSTALLDIR_VALID</Publish>
+        </Control>
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)">
+          <Publish Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
+        </Control>
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)">
+          <Publish Event="DoAction" Value="WixUIValidatePath">NOT WIXUI_INSTALLDIR_VALID</Publish>
+          <Publish Event="SpawnDialog" Value="InvalidDirDlg">NOT WIXUI_INSTALLDIR_VALID</Publish>
+          <Publish Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="3">1</Publish>
+          <Publish Event="DoAction" Value="WixUISetDefaultInstallDir" Order="4">1</Publish>
+          <Publish Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
+          <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
+        </Control>
+      </Dialog>
+    </UI>
+  </Fragment>
+</Wix>

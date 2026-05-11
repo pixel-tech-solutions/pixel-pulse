@@ -1,0 +1,50 @@
+name: Build Pixel Pulse
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Validate assets
+        run: |
+          if (Test-Path scripts\Validate-Assets.ps1) {
+            .\scripts\Validate-Assets.ps1
+          } else {
+            Write-Host "Validate-Assets.ps1 not found; skipping asset validation."
+          }
+        continue-on-error: true
+
+      - name: Build (Release)
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Publish PixelPulse
+        run: |
+          dotnet publish PixelPulse\PixelPulse.csproj -c Release -o publish\PixelPulse --no-build
+
+      - name: Upload PixelPulse artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PixelPulse-Release
+          path: publish/PixelPulse/
+
+      - name: Upload DatabaseBuilder artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PixelPulse.DatabaseBuilder-Release
+          path: PixelPulse.DatabaseBuilder/bin/Release/net8.0/

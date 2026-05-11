@@ -1,0 +1,26 @@
+{
+  "Build": {
+    "DefaultConfiguration": "Release",
+    "PixelPulseProject": "PixelPulse/PixelPulse.csproj",
+    "DatabaseBuilderProject": "PixelPulse.DatabaseBuilder/PixelPulse.DatabaseBuilder.csproj",
+    "InstallerProject": "PixelPulse.Installer/PixelPulse.Installer.wixproj"
+  },
+  "Assets": {
+    "AppIconPath": "PixelPulse/Resources/icon.ico",
+    "BannerPath": "PixelPulse.Installer/Assets/banner.bmp",
+    "BannerWidth": 493,
+    "BannerHeight": 58,
+    "DialogPath": "PixelPulse.Installer/Assets/dialog.bmp",
+    "DialogWidth": 493,
+    "DialogHeight": 312,
+    "InstallerIconPath": "PixelPulse.Installer/Assets/icon.ico"
+  },
+  "Paths": {
+    "DatabaseRelative": "PixelPulse/quotes.db",
+    "AppDataFolder": "PixelPulse"
+  },
+  "Testing": {
+    "LaunchAppSeconds": 5,
+    "DefaultConfig": "Release"
+  }
+}

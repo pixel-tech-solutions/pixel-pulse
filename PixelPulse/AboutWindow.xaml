@@ -1,0 +1,132 @@
+<Window x:Class="PixelPulse.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="About Pixel Pulse" Height="450" Width="500"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="#1F2937">
+    <Window.Resources>
+        <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="#6B46C1" Offset="0"/>
+            <GradientStop Color="#3B82F6" Offset="1"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="DarkBackgroundBrush" Color="#1F2937"/>
+        <SolidColorBrush x:Key="LightTextBrush" Color="#F9FAFB"/>
+        <SolidColorBrush x:Key="PrimaryPurpleBrush" Color="#6B46C1"/>
+        <SolidColorBrush x:Key="SecondaryBlueBrush" Color="#3B82F6"/>
+        <SolidColorBrush x:Key="AccentGoldBrush" Color="#F59E0B"/>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header with gradient -->
+        <Border Grid.Row="0" Background="{StaticResource HeaderGradient}">
+            <StackPanel VerticalAlignment="Center" Margin="30,0">
+                <TextBlock Text="Pixel Pulse" 
+                          FontSize="32" 
+                          FontWeight="Bold" 
+                          Foreground="White"
+                          HorizontalAlignment="Center"/>
+                <TextBlock Text="Inspiration at Your Fingertips" 
+                          FontSize="14" 
+                          Foreground="#E0E0E0"
+                          HorizontalAlignment="Center"
+                          Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Content -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="30">
+            <StackPanel>
+                <TextBlock Text="Version 1.0.0" 
+                          FontSize="16" 
+                          FontWeight="SemiBold"
+                          Foreground="{StaticResource LightTextBrush}"/>
+                
+                <Separator Background="#3B82F6" Opacity="0.5"/>
+                
+                <TextBlock TextWrapping="Wrap" Foreground="{StaticResource LightTextBrush}">
+                    <Run Text="Pixel Pulse is a beautiful desktop application that displays inspirational quotes, Bible verses, and motivational messages in a floating, transparent window."/>
+                </TextBlock>
+                
+                <TextBlock TextWrapping="Wrap" Foreground="{StaticResource LightTextBrush}">
+                    <Run Text="Customize your experience with 10 quote categories, matching modes, and extensive personalization options."/>
+                </TextBlock>
+                
+                <Separator Background="#3B82F6" Opacity="0.5"/>
+                
+                <StackPanel>
+                    <TextBlock Text="Developed by" 
+                              FontSize="14" 
+                              FontWeight="SemiBold"
+                              Foreground="{StaticResource AccentGoldBrush}"
+                              Margin="0,0,0,5"/>
+                    <TextBlock Text="Pixel Tech Solutions" 
+                              FontSize="16" 
+                              FontWeight="Bold"
+                              Foreground="{StaticResource SecondaryBlueBrush}"/>
+                    <TextBlock Text="Stephen Ssegonga, CEO" 
+                              FontSize="14"
+                              Foreground="{StaticResource LightTextBrush}"
+                              Margin="0,5,0,0"/>
+                </StackPanel>
+                
+                <Separator Background="#3B82F6" Opacity="0.5"/>
+                
+                <StackPanel>
+                    <TextBlock Text="Contact" 
+                              FontSize="14" 
+                              FontWeight="SemiBold"
+                              Foreground="{StaticResource AccentGoldBrush}"
+                              Margin="0,0,0,5"/>
+                    <TextBlock Text="contact@pixeltechsolutions.com" 
+                              Foreground="{StaticResource SecondaryBlueBrush}"
+                              Cursor="Hand"
+                              MouseLeftButtonDown="Email_MouseLeftButtonDown"/>
+                    <TextBlock Text="www.pixeltechsolutions.com" 
+                              Foreground="{StaticResource SecondaryBlueBrush}"
+                              Cursor="Hand"
+                              Margin="0,5,0,0"
+                              MouseLeftButtonDown="Website_MouseLeftButtonDown"/>
+                </StackPanel>
+                
+                <Separator Background="#3B82F6" Opacity="0.5"/>
+                
+                <TextBlock Text="Copyright © 2026 Pixel Tech Solutions. All rights reserved." 
+                          FontSize="11" 
+                          Foreground="#9CA3AF"
+                          TextAlignment="Center"
+                          Margin="0,10,0,0"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Close Button -->
+        <Border Grid.Row="2" Background="#2D3748" Padding="20">
+            <Button Content="Close" 
+                   Width="100" 
+                   Height="35"
+                   Background="{StaticResource PrimaryPurpleBrush}"
+                   Foreground="White"
+                   BorderThickness="0"
+                   Cursor="Hand"
+                   Click="CloseButton_Click"
+                   HorizontalAlignment="Center">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="{StaticResource PrimaryPurpleBrush}"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource SecondaryBlueBrush}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Border>
+    </Grid>
+</Window>

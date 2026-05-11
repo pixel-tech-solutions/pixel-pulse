@@ -1,0 +1,87 @@
+# Build outputs
+bin/
+obj/
+InstallerOutput/
+*.msi
+*.exe
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio 2015 cache directory
+.vs/
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# MSTest test Results
+[Tt]estResults/
+*.trx
+*.vspx
+*.coverage
+
+# NuGet Packages
+*.nupkg
+packages/
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# CodeRush
+.cr/
+
+# DotCover is a Code Coverage Tool
+*.dotCover
+
+# NCrunch
+_NCrunch_*
+.*crunch*.local.xml
+
+# MightyMoose
+*.mm.*
+AutoTest.Net/
+
+# Web workspaces (the core Visual Studio folder)
+.vs/
+
+# Publish Web Output
+*.[Pp]ublish.xml
+*.azurePubxml
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Mac
+.DS_Store
+
+# Local database files
+*.db
+*.sqlite
+
+# Temporary files
+*.tmp
+*.temp
+
+# Log files
+*.log
+
+# PowerShell Gallery modules
+PSGetModule.xml

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" 
+           Name="Pixel Pulse" 
+           Language="1033" 
+           Version="1.0.0" 
+           Manufacturer="Pixel Tech Solutions" 
+           UpgradeCode="A1B2C3D4-E5F6-7890-ABCD-EF1234567890">
+    
+    <Package InstallerVersion="200" 
+             Compressed="yes" 
+             InstallScope="perUser"
+             Description="Pixel Pulse - Inspiration at Your Fingertips"
+             Comments="Pixel Pulse installer by Pixel Tech Solutions"
+             Manufacturer="Pixel Tech Solutions"/>
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <!-- Icon -->
+    <Icon Id="icon.ico" SourceFile="Assets\icon.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="icon.ico" />
+
+    <!-- UI -->
+    <UIRef Id="WixUI_InstallDir" />
+    <WixVariable Id="WixUILicenseRtf" Value="Assets\license.rtf" />
+    <WixVariable Id="WixUIDialogBmp" Value="Assets\dialog.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="Assets\banner.bmp" />
+
+    <!-- Features -->
+    <Feature Id="ProductFeature" Title="Pixel Pulse" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id="ApplicationShortcut" />
+    </Feature>
+
+    <!-- Directory Structure -->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="LocalAppDataFolder">
+        <Directory Id="ManufacturerFolder" Name="Pixel Tech Solutions">
+          <Directory Id="INSTALLFOLDER" Name="Pixel Pulse">
+            <Component Id="ProductComponents" Guid="B2C3D4E5-F6A7-8901-BCDE-F12345678903">
+              <File Id="PixelPulseExe" Source="$(var.PixelPulse.TargetPath)" KeyPath="yes">
+                <Shortcut Id="ApplicationStartMenuShortcut"
+                          Directory="ApplicationProgramsFolder"
+                          Name="Pixel Pulse"
+                          WorkingDirectory="INSTALLFOLDER"
+                          Icon="icon.ico"
+                          IconIndex="0"
+                          Advertise="yes"/>
+                <Shortcut Id="ApplicationDesktopShortcut"
+                          Directory="DesktopFolder"
+                          Name="Pixel Pulse"
+                          WorkingDirectory="INSTALLFOLDER"
+                          Icon="icon.ico"
+                          IconIndex="0"
+                          Advertise="yes"/>
+              </File>
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+      
+      <!-- Start Menu -->
+      <Directory Id="ApplicationProgramsFolder">
+        <Directory Id="ApplicationProgramsSubFolder" Name="Pixel Tech Solutions"/>
+      </Directory>
+      
+      <!-- Desktop -->
+      <Directory Id="DesktopFolder" Name="Desktop"/>
+    </Directory>
+
+    <!-- Start Menu Shortcut Component -->
+    <Component Id="ApplicationShortcut" Directory="ApplicationProgramsSubFolder" Guid="C3D4E5F6-A7B8-9012-CDEF-12345678904">
+      <Shortcut Id="ApplicationStartMenuShortcut2"
+                Name="Pixel Pulse"
+                Target="[INSTALLFOLDER]PixelPulse.exe"
+                WorkingDirectory="INSTALLFOLDER"
+                Icon="icon.ico"
+                IconIndex="0"/>
+      <RemoveFolder Id="ApplicationProgramsSubFolder" On="uninstall"/>
+      <RegistryValue Root="HKCU" Key="Software\Pixel Tech Solutions\Pixel Pulse" Name="Installed" Type="integer" Value="1" KeyPath="yes"/>
+    </Component>
+
+    <!-- Custom Actions -->
+    <CustomAction Id="SetInstallFolder" Property="WIXUI_INSTALLDIR" Value="[LocalAppDataFolder]Pixel Tech Solutions\Pixel Pulse" />
+    <InstallUISequence>
+      <Custom Action="SetInstallFolder" Before="CostInitialize" />
+    </InstallUISequence>
+  </Product>
+</Wix>
