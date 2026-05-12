@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
@@ -49,9 +50,10 @@ namespace PixelPulse
             timer.Start();
 
             // Create system tray icon
+            var iconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "icon.ico");
             _notifyIcon = new NotifyIcon
             {
-                Icon = new System.Drawing.Icon("Resources\\icon.ico"),
+                Icon = File.Exists(iconPath) ? new System.Drawing.Icon(iconPath) : System.Drawing.SystemIcons.Application,
                 Visible = true,
                 Text = "Pixel Pulse"
             };
